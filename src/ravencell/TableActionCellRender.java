@@ -19,12 +19,12 @@ public class TableActionCellRender extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable jtable, Object o, boolean isSelected, boolean bln1, int row, int column) {
         Component com =  super.getTableCellRendererComponent(jtable, o, isSelected, bln1, row, column); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         PanelAction action = new PanelAction();
-        
-        if(column == 9) {
-            action.setBackground(jtable.getSelectionBackground());
-            return action;
+        if(isSelected == false && row % 2 == 0) {
+            action.setBackground(Color.WHITE);
         } else {
-            return super.getTableCellRendererComponent(jtable, o, isSelected, bln1, row, column);
+            action.setBackground(com.getBackground());
         }
+        return action;
+    
     }
 }

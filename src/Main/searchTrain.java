@@ -279,10 +279,6 @@ public class searchTrain extends javax.swing.JFrame {
                 Object[] rowData = {trainNumber, trainName, origin, destination, departureTime, arrivalTime, sleeperAvailable, ac2Available, ac1Available};
                 tableModel.addRow(rowData);
             }
-            
-            TableActionCellRender renderer = new TableActionCellRender();
-            tblTraininfo.getColumnModel().getColumn(9).setCellRenderer(renderer);
-
 
             //close ResultSet, PreparedStatement and Connection
             rs.close();
