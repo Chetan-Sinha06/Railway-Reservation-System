@@ -164,7 +164,7 @@ public class searchTrain extends javax.swing.JFrame {
         tblTraininfo.setForeground(new java.awt.Color(0, 0, 0));
         tblTraininfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
                 "Train Number", "Train Name", "Source_Station", "Destination_Station", "Departure_Time", "Arrival_Time", "Sleeper AVL", "2 AC AVL", "1 AC AVL", "Book Now"
@@ -276,22 +276,10 @@ public class searchTrain extends javax.swing.JFrame {
                 int sleeperAvailable = rs.getInt("Sleeper_Available");
                 int ac2Available = rs.getInt("AC2_Available");
                 int ac1Available = rs.getInt("AC1_Available");
-                
-                ImageIcon bookIcon = new ImageIcon(icon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH));
-                
-                JButton bookBtn = new JButton(bookIcon);
-                bookBtn.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setVisible(false);
-                        Booking bng = new Booking();
-                        bng.setVisible(true);
-                    }
-                });
-                
-                Object[] rowData = {trainNumber, trainName, origin, destination, departureTime, arrivalTime, sleeperAvailable, ac2Available, ac1Available,bookBtn};
+                Object[] rowData = {trainNumber, trainName, origin, destination, departureTime, arrivalTime, sleeperAvailable, ac2Available, ac1Available};
                 tableModel.addRow(rowData);
             }
+            
             TableActionCellRender renderer = new TableActionCellRender();
             tblTraininfo.getColumnModel().getColumn(9).setCellRenderer(renderer);
 
