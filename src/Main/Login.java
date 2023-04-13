@@ -4,6 +4,7 @@
  */
 package Main;
 import java.sql.*;
+import javax.swing.JLabel;
 
 import javax.swing.JOptionPane;
 /**
@@ -352,15 +353,18 @@ public class Login extends javax.swing.JFrame {
         else {
             try {
                 Connection con = DriverManager.getConnection(dbURL, dbUser, dbPassword); //Establishing Database Connection
-                String Query = "SELECT USERNAME, PASSWORD from tlogin where USERNAME = '"+txtUsername.getText()+"'"; //SQL Query to retrieve user information
+                String Query = "SELECT USER_ID, USERNAME, PASSWORD from tlogin where USERNAME = '"+txtUsername.getText()+"'"; //SQL Query to retrieve user information
                 pst = con.prepareStatement(Query); //Prepare the SQL Statement
                 rs = pst.executeQuery(); //Execute the SQL Statement and retrieve the results
                 rs.next(); //Moves the cursor to the first row of the result set
-                if(pass.equals(rs.getString("PASSWORD"))) {
-                    UserDashboard st = new UserDashboard();
+                if(pass.equals(rs.getString("PASSWORD"))) {     
+                    int userId = rs.getInt("USER_ID");
+                    UserDashboard st = new UserDashboard(userId);
                     this.hide();
                     st.setVisible(true);
                     rs.next();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid username or password");
                 }
                 con.close(); //Closing the Database connection
             } catch(Exception e) {
