@@ -8,6 +8,8 @@ import java.sql.Connection;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
  /*
@@ -56,8 +58,6 @@ public class searchTrain extends javax.swing.JFrame {
         col7.setPreferredWidth(100);
         TableColumn col8 = tblTraininfo.getColumnModel().getColumn(7);
         col8.setPreferredWidth(100);
-        TableColumn col9 = tblTraininfo.getColumnModel().getColumn(8);
-        col9.setPreferredWidth(100);
     }
 
     
@@ -88,22 +88,26 @@ public class searchTrain extends javax.swing.JFrame {
         lblFullName = new javax.swing.JLabel();
         btnGetData = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        lblFullName1 = new javax.swing.JLabel();
-        lblFullName2 = new javax.swing.JLabel();
+        lblTrainNo = new javax.swing.JLabel();
+        lblTrainName = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        lblFullName3 = new javax.swing.JLabel();
+        lblDepTime = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboClass = new javax.swing.JComboBox<>();
         txtUserID = new javax.swing.JTextField();
-        jSpinner1 = new javax.swing.JSpinner();
-        btnGetData1 = new javax.swing.JButton();
+        spinNumOfPassengers = new javax.swing.JSpinner();
+        btnBook = new javax.swing.JButton();
         btnGoBack = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        lblTotalFare = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        txtDate = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1200, 700));
+        setPreferredSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 119, 194));
@@ -120,11 +124,11 @@ public class searchTrain extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(366, Short.MAX_VALUE)
+                .addContainerGap(316, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addContainerGap(316, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,14 +174,14 @@ public class searchTrain extends javax.swing.JFrame {
         tblTraininfo.setForeground(new java.awt.Color(0, 0, 0));
         tblTraininfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Train Number", "Train Name", "Source Station", "Destination Station", "Departure Time", "Arrival Time", "Class Type", "Fare", "Total Distance"
+                "Train Number", "Train Name", "Source Station", "Destination Station", "Departure Time", "Arrival Time", "Fare", "Total Distance"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, true, true, true, true
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -188,10 +192,12 @@ public class searchTrain extends javax.swing.JFrame {
         tblTraininfo.setFillsViewportHeight(true);
         tblTraininfo.setRowHeight(40);
         tblTraininfo.setSelectionBackground(new java.awt.Color(0, 119, 194));
+        tblTraininfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTraininfoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTraininfo);
-        if (tblTraininfo.getColumnModel().getColumnCount() > 0) {
-            tblTraininfo.getColumnModel().getColumn(5).setResizable(false);
-        }
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -199,6 +205,7 @@ public class searchTrain extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 119, 194));
         jLabel5.setText("User_ID:");
 
+        txtFare.setEditable(false);
         txtFare.setBackground(new java.awt.Color(255, 255, 255));
         txtFare.setForeground(new java.awt.Color(0, 0, 0));
         txtFare.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
@@ -208,7 +215,7 @@ public class searchTrain extends javax.swing.JFrame {
         jLabel6.setText("Full Name:");
 
         lblFullName.setBackground(new java.awt.Color(255, 255, 255));
-        lblFullName.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblFullName.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         lblFullName.setForeground(new java.awt.Color(0, 0, 0));
         lblFullName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
 
@@ -226,24 +233,24 @@ public class searchTrain extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 119, 194));
         jLabel7.setText("Train No:");
 
-        lblFullName1.setBackground(new java.awt.Color(255, 255, 255));
-        lblFullName1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblFullName1.setForeground(new java.awt.Color(0, 0, 0));
-        lblFullName1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
+        lblTrainNo.setBackground(new java.awt.Color(255, 255, 255));
+        lblTrainNo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblTrainNo.setForeground(new java.awt.Color(0, 0, 0));
+        lblTrainNo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
 
-        lblFullName2.setBackground(new java.awt.Color(255, 255, 255));
-        lblFullName2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblFullName2.setForeground(new java.awt.Color(0, 0, 0));
-        lblFullName2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
+        lblTrainName.setBackground(new java.awt.Color(255, 255, 255));
+        lblTrainName.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblTrainName.setForeground(new java.awt.Color(0, 0, 0));
+        lblTrainName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 119, 194));
         jLabel8.setText("Train Name:");
 
-        lblFullName3.setBackground(new java.awt.Color(255, 255, 255));
-        lblFullName3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblFullName3.setForeground(new java.awt.Color(0, 0, 0));
-        lblFullName3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
+        lblDepTime.setBackground(new java.awt.Color(255, 255, 255));
+        lblDepTime.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblDepTime.setForeground(new java.awt.Color(0, 0, 0));
+        lblDepTime.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 119, 194));
@@ -261,21 +268,27 @@ public class searchTrain extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 119, 194));
         jLabel12.setText("No. Of Passengers:");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sleeper", "AC3", "AC2", "AC1" }));
+        comboClass.setBackground(new java.awt.Color(255, 255, 255));
+        comboClass.setForeground(new java.awt.Color(0, 0, 0));
+        comboClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sleeper", "AC3", "AC2", "AC1" }));
 
         txtUserID.setBackground(new java.awt.Color(255, 255, 255));
         txtUserID.setForeground(new java.awt.Color(0, 0, 0));
         txtUserID.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
 
-        btnGetData1.setBackground(new java.awt.Color(0, 119, 194));
-        btnGetData1.setForeground(new java.awt.Color(255, 255, 255));
-        btnGetData1.setText("Book");
-        btnGetData1.setBorder(null);
-        btnGetData1.addActionListener(new java.awt.event.ActionListener() {
+        spinNumOfPassengers.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinNumOfPassengersStateChanged(evt);
+            }
+        });
+
+        btnBook.setBackground(new java.awt.Color(0, 119, 194));
+        btnBook.setForeground(new java.awt.Color(255, 255, 255));
+        btnBook.setText("Book");
+        btnBook.setBorder(null);
+        btnBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGetData1ActionPerformed(evt);
+                btnBookActionPerformed(evt);
             }
         });
 
@@ -288,6 +301,24 @@ public class searchTrain extends javax.swing.JFrame {
                 btnGoBackActionPerformed(evt);
             }
         });
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 119, 194));
+        jLabel13.setText("Total Fare:");
+
+        lblTotalFare.setEditable(false);
+        lblTotalFare.setBackground(new java.awt.Color(255, 255, 255));
+        lblTotalFare.setForeground(new java.awt.Color(0, 0, 0));
+        lblTotalFare.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 119, 194)));
+        lblTotalFare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lblTotalFareActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 119, 194));
+        jLabel14.setText("Date Of Journey: ");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -303,25 +334,29 @@ public class searchTrain extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinNumOfPassengers, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblTotalFare, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(btnGetData1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblFullName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(txtFare, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFullName1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(lblFullName2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(lblFullName3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTrainNo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(lblTrainName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(lblDepTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(comboClass, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtUserID, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(29, 29, 29)
-                        .addComponent(btnGetData, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnGetData, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -339,32 +374,40 @@ public class searchTrain extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(lblFullName1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTrainNo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(lblFullName2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTrainName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(lblFullName3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDepTime, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtFare, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(spinNumOfPassengers, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(jLabel13)
+                    .addComponent(lblTotalFare, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGetData1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -380,9 +423,9 @@ public class searchTrain extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(228, 228, 228)
+                .addGap(52, 52, 52)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGap(198, 198, 198))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -452,11 +495,10 @@ public class searchTrain extends javax.swing.JFrame {
                 String tdestination = rs.getString("Destination_Station");
                 String departureTime = rs.getString("Departure_Time");
                 String arrivalTime = rs.getString("Arrival_Time");
-                String classType  = rs.getString("Class_Type");
                 String Fare = rs.getString("Fare");
                 String tot_distance = rs.getString("Total_Distance");
                 
-                Object[] rowData = {trainNumber, trainName, origin, tdestination, departureTime, arrivalTime, classType, Fare, tot_distance};
+                Object[] rowData = {trainNumber, trainName, origin, tdestination, departureTime, arrivalTime, Fare, tot_distance};
                 tableModel.addRow(rowData);
             }
 
@@ -505,9 +547,86 @@ public class searchTrain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGetDataActionPerformed
 
-    private void btnGetData1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetData1ActionPerformed
+    private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnGetData1ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        String trainNo = lblTrainNo.getText();
+        String classType = comboClass.getSelectedItem().toString();
+        String numOfSeats = spinNumOfPassengers.getValue().toString();
+        String userId = txtUserID.getText();
+        String totFare = lblTotalFare.getText();
+        
+        DateFormat da = new SimpleDateFormat("dd-MM-yyyy");
+        String date = da.format(txtDate.getDate());
+        
+        try {
+            Connection con = DriverManager.getConnection(dbURL, dbUser, dbPassword);
+            //SQL Statement to INSERT values into the table
+            String Query = "INSERT INTO BOOKINGS(TRAIN_NO,CLASS_TYPE,NUMSEATS,USER_ID,DOJ,TOTAL_FARE) VALUES (?,?,?,?,?,?)";
+            PreparedStatement pst = con.prepareStatement(Query);
+            //set the values for the placeholders in the preparedstatement 
+            pst.setString(1, trainNo);
+            pst.setString(2, classType);
+            pst.setString(3, numOfSeats);
+            pst.setString(4, userId);
+            pst.setString(5, date);
+            pst.setString(6, totFare);
+            pst.executeUpdate(); //Execute the SQL Statement to insert the values into the table 
+            
+            JOptionPane.showMessageDialog(null, "Ticket Booked");
+            
+            //retrieve data from BOOKINGS, TLOGIN, and TRAIN tables
+            String bookingNoQuery = "SELECT PNR_NUMBER FROM BOOKINGS WHERE TRAIN_NO = ? AND USER_ID = ? AND NUMSEATS = ? AND TOTAL_FARE = ?";
+            PreparedStatement bookingNoPst = con.prepareStatement(bookingNoQuery);
+            bookingNoPst.setString(1, trainNo);
+            bookingNoPst.setString(2, userId);
+            bookingNoPst.setString(3, numOfSeats);
+            bookingNoPst.setString(4, totFare);
+            ResultSet bookingNoRs = bookingNoPst.executeQuery();
+            bookingNoRs.next();
+            String bookingNo = bookingNoRs.getString(1);
+            
+            String userQuery = "SELECT FULL_NAME, GENDER FROM TLOGIN WHERE USER_ID = ?";
+            PreparedStatement userPst = con.prepareStatement(userQuery);
+            userPst.setString(1, userId);
+            ResultSet userRs = userPst.executeQuery();
+            userRs.next();
+            String fullName = userRs.getString(1);
+            String gender = userRs.getString(2);
+            
+            String trainQuery = "SELECT TRAIN_NAME, SOURCE_STATION, DESTINATION_STATION, DEPARTURE_TIME, ARRIVAL_TIME FROM TRAIN WHERE TRAIN_NO = ?";
+            PreparedStatement trainPst = con.prepareStatement(trainQuery);
+            trainPst.setString(1, trainNo);
+            ResultSet trainRs = trainPst.executeQuery();
+            trainRs.next();
+            String trainName = trainRs.getString(1);
+            String sourceStation = trainRs.getString(2);
+            String destinationStation = trainRs.getString(3);
+            String departureTime = trainRs.getString(4);
+            String arrivalTime = trainRs.getString(5);
+            
+            // Open the TicketFrame panel and set the retrieved data to the corresponding text fields
+            TicketFrame tf = new TicketFrame();
+            tf.txtBookedFrom.setText(sourceStation);
+            tf.txtTo.setText(destinationStation);
+            tf.txtDOJ.setText(date);
+            tf.txtDepartureTime.setText(departureTime);
+            tf.txtArrivalTime.setText(arrivalTime);
+            tf.txtPnrNo.setText(bookingNo);
+            tf.txtTrainNo.setText(trainNo);
+            tf.txtTrainName.setText(trainName);
+            tf.txtClass.setText(classType);
+            tf.txtFullName.setText(fullName);
+            tf.txtGender.setText(gender);
+            tf.txtSeats.setText(numOfSeats);
+            tf.txtTotalFare.setText(totFare);
+            tf.setVisible(true);
+            
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }         
+    }//GEN-LAST:event_btnBookActionPerformed
 
     private void btnGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackActionPerformed
         // TODO add your handling code here:
@@ -515,6 +634,40 @@ public class searchTrain extends javax.swing.JFrame {
         this.hide();
         ud.setVisible(true);
     }//GEN-LAST:event_btnGoBackActionPerformed
+
+    private void tblTraininfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTraininfoMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tableModel = (DefaultTableModel) tblTraininfo.getModel();
+        
+        int selectIndex = tblTraininfo.getSelectedRow();
+        
+        lblTrainNo.setText(tableModel.getValueAt(selectIndex, 0).toString());
+        lblTrainName.setText(tableModel.getValueAt(selectIndex, 1).toString());
+        lblDepTime.setText(tableModel.getValueAt(selectIndex, 4).toString());
+        txtFare.setText(tableModel.getValueAt(selectIndex, 6).toString());
+    }//GEN-LAST:event_tblTraininfoMouseClicked
+
+    private void lblTotalFareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTotalFareActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTotalFareActionPerformed
+
+    private void spinNumOfPassengersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinNumOfPassengersStateChanged
+        // TODO add your handling code here:
+        int price = Integer.parseInt(txtFare.getText());
+        int numOfSeats = Integer.parseInt(spinNumOfPassengers.getValue().toString());
+        String classType = (String) comboClass.getSelectedItem();
+        int totFare = price * numOfSeats;
+        
+        if(classType.equals("Sleeper")) {
+            totFare -= 1000 * numOfSeats;
+        } else if(classType.equals("AC3")) {
+            totFare -= 800 * numOfSeats;
+        } else if(classType.equals("AC2")) {
+            totFare -= 500 * numOfSeats;
+        }
+        
+        lblTotalFare.setText(String.valueOf(totFare));
+    }//GEN-LAST:event_spinNumOfPassengersStateChanged
 
     /**
      * @param args the command line arguments
@@ -553,15 +706,17 @@ public class searchTrain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBook;
     private javax.swing.JButton btnGetData;
-    private javax.swing.JButton btnGetData1;
     private javax.swing.JButton btnGoBack;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comboClass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -574,12 +729,14 @@ public class searchTrain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JLabel lblDepTime;
     private javax.swing.JLabel lblFullName;
-    private javax.swing.JLabel lblFullName1;
-    private javax.swing.JLabel lblFullName2;
-    private javax.swing.JLabel lblFullName3;
+    private javax.swing.JTextField lblTotalFare;
+    private javax.swing.JLabel lblTrainName;
+    private javax.swing.JLabel lblTrainNo;
+    private javax.swing.JSpinner spinNumOfPassengers;
     private javax.swing.JTable tblTraininfo;
+    private com.toedter.calendar.JDateChooser txtDate;
     private javax.swing.JTextField txtDestination;
     private javax.swing.JTextField txtFare;
     private javax.swing.JTextField txtSource;
