@@ -34,11 +34,11 @@ public class UserDashboard extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         lblUser_id = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnPnrEnquiry = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnCancelTicket = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
@@ -100,10 +100,15 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main/travel-agent (1).png"))); // NOI18N
-        jButton1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnPnrEnquiry.setBackground(new java.awt.Color(255, 255, 255));
+        btnPnrEnquiry.setForeground(new java.awt.Color(255, 255, 255));
+        btnPnrEnquiry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main/travel-agent (1).png"))); // NOI18N
+        btnPnrEnquiry.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnPnrEnquiry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPnrEnquiryActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 119, 194));
@@ -120,13 +125,13 @@ public class UserDashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main/cancel-ticket.png"))); // NOI18N
-        jButton3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelTicket.setBackground(new java.awt.Color(255, 255, 255));
+        btnCancelTicket.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main/cancel-ticket (2).png"))); // NOI18N
+        btnCancelTicket.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnCancelTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnCancelTicketActionPerformed(evt);
             }
         });
 
@@ -147,7 +152,7 @@ public class UserDashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPnrEnquiry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,9 +162,9 @@ public class UserDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(64, 64, 64))
         );
         jPanel2Layout.setVerticalGroup(
@@ -171,10 +176,10 @@ public class UserDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1)
-                            .addComponent(jButton3))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPnrEnquiry, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelTicket, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
@@ -215,9 +220,12 @@ public class UserDashboard extends javax.swing.JFrame {
         st.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnCancelTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelTicketActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        setVisible(false);
+        CancelTicket ct = new CancelTicket(userId);
+        ct.setVisible(true);
+    }//GEN-LAST:event_btnCancelTicketActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -225,6 +233,13 @@ public class UserDashboard extends javax.swing.JFrame {
         this.hide();
         ln.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnPnrEnquiryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPnrEnquiryActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        pnrEnquiry pe = new pnrEnquiry(userId);
+        pe.setVisible(true);
+    }//GEN-LAST:event_btnPnrEnquiryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,9 +279,9 @@ public class UserDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCancelTicket;
+    private javax.swing.JButton btnPnrEnquiry;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

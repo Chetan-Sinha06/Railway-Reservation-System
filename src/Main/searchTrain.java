@@ -174,7 +174,7 @@ public class searchTrain extends javax.swing.JFrame {
         tblTraininfo.setForeground(new java.awt.Color(0, 0, 0));
         tblTraininfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Train Number", "Train Name", "Source Station", "Destination Station", "Departure Time", "Arrival Time", "Fare", "Total Distance"
